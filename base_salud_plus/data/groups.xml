@@ -1,0 +1,13 @@
+<odoo>
+    <record model="ir.module.category" id="module_category_salud_plus">
+            <field name="name">Salud Plus</field>
+            <field name="description">Salud Plus Applilcation</field>
+            <field name="sequence">20</field>
+    </record>
+
+    <record id="salud_plus_admin_group" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="comment">Administrator Permission Group.</field>
+        <field name="category_id" ref="module_category_salud_plus"/>
+    </record>
+</odoo>

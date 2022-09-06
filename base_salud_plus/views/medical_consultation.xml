@@ -1,0 +1,240 @@
+<odoo>
+    <record id="medical_consultation_view_form" model="ir.ui.view">
+        <field name="name">medical_consultation_view_form</field>
+        <field name="model">medical.consultation</field>
+        <field name="arch" type="xml">
+            <form string="Consulta">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group name="top">
+                        <group name="left">
+                            <field name="patient_id"  widget="res_partner_many2one"
+                                   context="{'res_partner_search_mode': 'customer', 'show_address': 1, 'show_vat': True}"
+                                   options='{"always_reload": True}'/>
+                            <field name="vat"/>
+                            <field name="gender"/>
+                            <field name="type_blood"/>
+                            <field name="medical_insurance_id"/>
+                            <field name="medical_category_id"/>
+                            <field name="medical_insurance_no"/>
+                            <field name="date_expire_medical_insurance"/>
+                        </group>
+                        <group name="right">
+                            <field name="phone"/>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="tipo_contribuyente"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page name="consultation" string="Consulta Medica">
+                            <group name="top">
+                                <group name="left">
+                                    <field name="doctor_id"/>
+                                    <field name="mode"/>
+                                    <field name="type_consultation"/>
+                                </group>
+                                <group name="right">
+                                    <field name="specialty_id"/>
+                                    <field name="date_consultation"/>
+                                </group>
+                            </group>
+
+                            <field name="subject"/>
+                            <field name="description"/>
+                        </page>
+                        <page name="prescription" string="Recetas">
+                            <field name="prescription_ids" context="{'default_patient_id': patient_id}">
+                                <tree editable="top">
+                                    <field name="medicine_id"/>
+                                    <field name="duration"/>
+                                    <field name="uom_id"/>
+                                    <field name="pauta"/>
+                                    <field name="indications"/>
+                                    <field name="patient_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="labs" string="Indicaciones">
+                            <field name="labs_ids" context="{'default_patient_id': patient_id}">
+                                <tree editable="top">
+                                    <field name="labs"/>
+                                    <field name="patient_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="seguimientos" string="Seguimientos">
+                            <group>
+                                <group>
+                                    <field name="asunto_seguimiento"/>
+                                    <field name="date_next"/>
+                                </group>
+                                <group>
+                                    <field name="responsable_id_seguimiento"/>
+                            <field name="description_seguimiento"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="result_labs" string="Resultados">
+                            <field name="result_ids" context="{'default_patient_id': patient_id}">
+                                <tree editable="top">
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="filename" invisible="1"/>
+                                    <field name="file_labs" widget="binary" filename="filename"/>
+                                    <field name="name"/>
+                                    <field name="patient_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="aprocasion" string="Aprocasion de Seguro">
+                            <group>
+                                <field name="aprobacion_no"/>
+                            </group>
+                        </page>
+                         <page name="exams" string="Examen Fisico y Presion Sanguinea">
+                            <field name="exam_ids" context="{'default_patient_id': patient_id}" >
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="exam_id"/>
+                                    <field name="uom_id"/>
+                                    <field name="responsable_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="pathological_background" string="Antecedentes Patologicos">
+                            <field name="pathological_background_ids"
+                                   context="{'default_type_diseases': 'diseases', 'default_patient_id': patient_id}" >
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="diseases_id"/>
+                                    <field name="type_diseases"/>
+                                    <field name="origin"/>
+                                    <field name="action"/>
+                                    <field name="responsable_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="disability" string="Codigo de Discapacidad">
+                            <field name="disability_ids"
+                                   context="{'default_type_diseases': 'disability', 'default_patient_id': patient_id}">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="diseases_id"/>
+                                    <field name="type_diseases"/>
+                                    <field name="origin"/>
+                                    <field name="action"/>
+                                    <field name="responsable_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="allergy" string="Sobre Alergias">
+                            <field name="allergy_ids"
+                                   context="{'default_type_diseases': 'allergy', 'default_patient_id': patient_id}">
+                                <tree editable="bottom">
+                                    <field name="date"/>
+                                    <field name="diseases_id"/>
+                                    <field name="type_diseases"/>
+                                    <field name="origin"/>
+                                    <field name="action"/>
+                                    <field name="responsable_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="invoice" string="Factura">
+                            <group>
+                                <field name="date_invoice"/>
+                                <field name="amount" widget="monetary"/>
+                                <field name="currency_id" readonly="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="medical_consultation_view_tree" model="ir.ui.view">
+        <field name="name">medical_consultation_view_tree</field>
+        <field name="model">medical.consultation</field>
+        <field name="arch" type="xml">
+            <tree string="Consultas">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="medical_consultation_action" model="ir.actions.act_window">
+        <field name="name">Consulta</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medical.consultation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="prescription_view_tree" model="ir.ui.view">
+        <field name="name">prescription_view_tree</field>
+        <field name="model">medical.prescription</field>
+        <field name="arch" type="xml">
+            <tree string="Recetas">
+                <field name="medicine_id"/>
+                <field name="duration"/>
+                <field name="uom_id"/>
+                <field name="pauta"/>
+                <field name="indications"/>
+                <field name="patient_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="prescription_view_action" model="ir.actions.act_window">
+        <field name="name">Receta</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medical.prescription</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="labs_indications_view_tree" model="ir.ui.view">
+        <field name="name">labs_indications_view_tree</field>
+        <field name="model">labs.indications</field>
+        <field name="arch" type="xml">
+            <tree string="Laboratorio">
+                <field name="labs"/>
+                <field name="patient_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="labs_indications_view_action" model="ir.actions.act_window">
+        <field name="name">Laboratorio</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labs.indications</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="result_labs_view_tree" model="ir.ui.view">
+        <field name="name">result_labs_view_tree</field>
+        <field name="model">result.labs</field>
+        <field name="arch" type="xml">
+            <tree string="Resultados de Laboratorio">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="filename" invisible="1"/>
+                <field name="file_labs" widget="binary" filename="filename"/>
+                <field name="name"/>
+                <field name="patient_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="result_labs_view_action" model="ir.actions.act_window">
+        <field name="name">Resultado</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">result.labs</field>
+        <field name="view_mode">tree</field>
+    </record>
+</odoo>

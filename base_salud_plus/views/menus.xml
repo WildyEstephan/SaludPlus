@@ -1,0 +1,51 @@
+<odoo>
+    <!-- This Menu Item will appear in the Upper bar, That's why It needs NO parent or action -->
+    <menuitem id="base_salud_plus_root" name="Salud Plus" sequence="0"
+              web_icon="base_salud_plus,static/description/patient_icon.png"/>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="medical_consultation_categ" name="Consultas"
+              parent="base_salud_plus_root" sequence="0"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="medical_consultation_action_categ" name="Consultas"
+              parent="medical_consultation_categ" action="medical_consultation_action" sequence="0"/>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="medical_insurance_categ" name="Seguros" parent="base_salud_plus_root" sequence="5"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="medical_insurance_action_categ" name="Seguros" parent="medical_insurance_categ"
+              action="medical_insurance_action" sequence="0"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="medical_insurances_approvations_action_categ" name="Aprovaciones" parent="medical_insurance_categ"
+              action="medical_insurances_approvations_action" sequence="1"/>
+
+    <!-- This Menu Item Must have a parent -->
+    <menuitem id="configutation_categ" name="Configuration" parent="base_salud_plus_root" sequence="600"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="diseases_action_categ" name="Enfermedades" parent="configutation_categ"
+              action="diseases_action" sequence="1"/>
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="symptoms_symptoms_action_categ" name="Sintomas" parent="configutation_categ"
+              action="symptoms_symptoms_action" sequence="2"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="physical_pressure_exam_action_categ" name="Examenes Fisicos Y Presion Sanguinea"
+              parent="configutation_categ"
+              action="physical_pressure_exam_action" sequence="3"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="labs_labs_action_categ" name="Indicaciones" parent="configutation_categ"
+              action="labs_labs_action" sequence="4"/>
+
+    <menuitem id="medicine_medicine_action_categ" name="Farmacos" parent="configutation_categ"
+              action="medicine_medicine_action" sequence="5"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="specialty_action_categ" name="Especialidades" parent="configutation_categ"
+              action="specialty_action" sequence="6"/>
+
+</odoo>

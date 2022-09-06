@@ -1,0 +1,18 @@
+<odoo>
+    <record id="symptoms_symptoms_view_tree" model="ir.ui.view">
+        <field name="name">symptoms_symptoms_view_tree</field>
+        <field name="model">symptoms.symptoms</field>
+        <field name="arch" type="xml">
+            <tree string="Symptoms" editable="top">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="symptoms_symptoms_action" model="ir.actions.act_window">
+        <field name="name">Sintomas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">symptoms.symptoms</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

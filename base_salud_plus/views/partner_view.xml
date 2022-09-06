@@ -1,0 +1,111 @@
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="base_view_partner_form_inherit_base_salud_plus" model="ir.ui.view">
+        <field name="name">base_view_partner_form_inherit_base_salud_plus</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" type="object" name="action_view_consultation"
+                        icon="fa-file">
+                        <field string="Consultas" name="consultation_count" widget="statinfo"/>
+                    </button>
+                <button class="oe_stat_button" type="object" name="action_view_prescription"
+                        icon="fa-clipboard">
+                        <field string="Recetas" name="prescription_count" widget="statinfo"/>
+                    </button>
+                <button class="oe_stat_button" type="object" name="action_view_indication"
+                        icon="fa-list">
+                        <field string="indicaciones" name="indication_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="action_view_result_lab"
+                        icon="fa-list">
+                        <field string="Resultados" name="result_lab_count" widget="statinfo"/>
+                    </button>
+
+            </xpath>
+
+            <xpath expr="//field[@name='vat']" position="before">
+                <!-- Add your fields or attributes here -->
+                <field name="is_patient"/>
+                <field name="birth_date"/>
+            </xpath>
+
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="tipo_contribuyente"/>
+            </xpath>
+
+            <xpath expr="//field[@name='function']" position="before">
+                <field name="medical_insurance_id"/>
+                <field name="medical_category_id"/>
+                <field name="medical_insurance_no"/>
+                <field name="date_expire_medical_insurance"/>
+                <field name="type_blood"/>
+                <field name="gender"/>
+            </xpath>
+
+            <xpath expr="//page[@name='contact_addresses']" position="attributes">
+                <attribute name="groups">base.group_erp_manager</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='sales_purchases']" position="attributes">
+                <attribute name="groups">base.group_erp_manager</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='internal_notes']" position="attributes">
+                <attribute name="groups">base.group_erp_manager</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='contact_addresses']" position="before">
+                <page name="exams" string="Examen Fisico y Presion Sanguinea">
+                    <field name="exam_ids">
+                        <tree editable="bottom">
+                            <field name="date"/>
+                            <field name="exam_id"/>
+                            <field name="uom_id"/>
+                            <field name="responsable_id"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="pathological_background" string="Antecedentes Patologicos">
+                    <field name="pathological_background_ids" context="{'default_type_diseases': 'diseases'}">
+                        <tree editable="bottom">
+                            <field name="date"/>
+                            <field name="diseases_id"/>
+                            <field name="type_diseases"/>
+                            <field name="origin"/>
+                            <field name="action"/>
+                            <field name="responsable_id"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="disability" string="Codigo de Discapacidad">
+                    <field name="disability_ids" context="{'default_type_diseases': 'disability'}">
+                        <tree editable="bottom">
+                            <field name="date"/>
+                            <field name="diseases_id"/>
+                            <field name="type_diseases"/>
+                            <field name="origin"/>
+                            <field name="action"/>
+                            <field name="responsable_id"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="allergy" string="Sobre Alergias">
+                    <field name="allergy_ids" context="{'default_type_diseases': 'allergy'}">
+                        <tree editable="bottom">
+                            <field name="date"/>
+                            <field name="diseases_id"/>
+                            <field name="type_diseases"/>
+                            <field name="origin"/>
+                            <field name="action"/>
+                            <field name="responsable_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

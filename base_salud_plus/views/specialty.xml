@@ -1,0 +1,35 @@
+<odoo>
+    <record id="specialty_view_tree" model="ir.ui.view">
+        <field name="name">specialty_view_tree</field>
+        <field name="model">specialty.specialty</field>
+        <field name="arch" type="xml">
+            <tree string="Especialidades" editable="top">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="specialty_action" model="ir.actions.act_window">
+        <field name="name">Especialidad</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">specialty.specialty</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!-- Inherit Form View to Modify it -->
+    <record id="specialty_view_form" model="ir.ui.view">
+        <field name="name">specialty_view_form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="before">
+                <!-- Add your fields or attributes here -->
+                <group>
+                    <field name="specialty_id"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

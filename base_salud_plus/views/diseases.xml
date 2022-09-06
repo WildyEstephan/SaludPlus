@@ -1,0 +1,32 @@
+<odoo>
+    <record id="diseases_view_tree" model="ir.ui.view">
+        <field name="name">diseases_view_tree</field>
+        <field name="model">diseases.diseases</field>
+        <field name="arch" type="xml">
+            <tree string="Enfermedades">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="diseases_view_form" model="ir.ui.view">
+        <field name="name">diseases_view_form</field>
+        <field name="model">diseases.diseases</field>
+        <field name="arch" type="xml">
+            <form string="Enfermedad">
+                <sheet>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="symptom_ids"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="diseases_action" model="ir.actions.act_window">
+        <field name="name">Enfermedad</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">diseases.diseases</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

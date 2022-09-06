@@ -1,0 +1,56 @@
+<odoo>
+  <data>
+
+    <record id="diseases_diseases_view_tree" model="ir.ui.view">
+        <field name="name">diseases_diseases_view_tree</field>
+        <field name="model">diseases.diseases</field>
+        <field name="arch" type="xml">
+            <tree string="Enfermedades" editable="top">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="diseases_diseases_action" model="ir.actions.act_window">
+        <field name="name">Enfermedades</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">diseases.diseases</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="labs_labs_view_tree" model="ir.ui.view">
+        <field name="name">labs_labs_view_tree</field>
+        <field name="model">labs.labs</field>
+        <field name="arch" type="xml">
+            <tree string="Indicaciones" editable="top">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="labs_labs_action" model="ir.actions.act_window">
+        <field name="name">Indicaciones</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">labs.labs</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <record id="medicine_medicine_view_tree" model="ir.ui.view">
+        <field name="name">medicine_medicine_view_tree</field>
+        <field name="model">medicine.medicine</field>
+        <field name="arch" type="xml">
+            <tree string="Farmacos" editable="top">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="medicine_medicine_action" model="ir.actions.act_window">
+        <field name="name">Farmacos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">medicine.medicine</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+  </data>
+</odoo>
