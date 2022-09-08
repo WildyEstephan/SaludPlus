@@ -58,12 +58,12 @@ class ResPartner(models.Model):
         string='Patologia',
         required=False, domain="[('type_diseases', '=', 'diseases')]")
     disability_ids = fields.One2many(
-        comodel_name='allergy.disability.pathological.background',
+        comodel_name='disability.background',
         inverse_name='patient_id',
         string='Discapacidad',
         required=False, domain="[('type_diseases', '=', 'disability')]")
     allergy_ids = fields.One2many(
-        comodel_name='allergy.disability.pathological.background',
+        comodel_name='allergy.background',
         inverse_name='patient_id',
         string='Alergia',
         required=False, domain="[('type_diseases', '=', 'allergy')]")
@@ -251,7 +251,7 @@ class PathologicalBackground(models.Model):
     diseases_id = fields.Many2one(
         comodel_name='diseases.diseases',
         string='Enfermedad',
-        required=True)
+        required=True, domain="[('type_diseases', '=', 'diseases')]")
     type_diseases = fields.Selection(
         string='Type Diseases',
         selection=[('diseases', 'Enfermedad'),
@@ -290,6 +290,96 @@ class PathologicalBackground(models.Model):
         string='Consulta',
         required=False)
 
+class DisabilityBackground(models.Model):
+    _name = 'disability.background'
+    _description = 'Disability Background'
 
+    diseases_id = fields.Many2one(
+        comodel_name='diseases.diseases',
+        string='Enfermedad',
+        required=True, domain="[('type_diseases', '=', 'disability')]")
+    type_diseases = fields.Selection(
+        string='Type Diseases',
+        selection=[('diseases', 'Enfermedad'),
+                   ('disability', 'Discapacidad'),
+                   ('allergy', 'Alergia'),
+                   ],
+        required=False, )
+
+    origin = fields.Selection(
+        string='Origen',
+        selection=[('patient', 'Paciente'),
+                   ('family', 'Familia'), ],
+        required=False, )
+    date = fields.Date(
+        string='Fecha',
+        required=True, default=datetime.today())
+    state = fields.Selection(
+        string='Estado',
+        selection=[
+            ('detected', 'Detectato'),
+            ('healthy', 'Sano'),
+                   ('in_treatment', 'En tratamiento'),
+                   ('not_treated', 'No atendido'),
+                   ],
+        required=True, )
+    responsable_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Registrado por',
+        required=False, default=lambda self: self.env.user, readonly=True)
+    patient_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Paciente',
+        required=False)
+    medical_consultation_id = fields.Many2one(
+        comodel_name='medical.consultation',
+        string='Consulta',
+        required=False)
+
+class AllergyBackground(models.Model):
+    _name = 'allergy.background'
+    _description = 'Allergy Background'
+
+    diseases_id = fields.Many2one(
+        comodel_name='diseases.diseases',
+        string='Enfermedad',
+        required=True, domain="[('type_diseases', '=', 'allergy')]")
+    type_diseases = fields.Selection(
+        string='Type Diseases',
+        selection=[('diseases', 'Enfermedad'),
+                   ('disability', 'Discapacidad'),
+                   ('allergy', 'Alergia'),
+                   ],
+        required=False, )
+
+    origin = fields.Selection(
+        string='Origen',
+        selection=[('patient', 'Paciente'),
+                   ('family', 'Familia'), ],
+        required=False, )
+    date = fields.Date(
+        string='Fecha',
+        required=True, default=datetime.today())
+    state = fields.Selection(
+        string='Estado',
+        selection=[
+            ('detected', 'Detectato'),
+            ('healthy', 'Sano'),
+                   ('in_treatment', 'En tratamiento'),
+                   ('not_treated', 'No atendido'),
+                   ],
+        required=True, )
+    responsable_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Registrado por',
+        required=False, default=lambda self: self.env.user, readonly=True)
+    patient_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Paciente',
+        required=False)
+    medical_consultation_id = fields.Many2one(
+        comodel_name='medical.consultation',
+        string='Consulta',
+        required=False)
 
 

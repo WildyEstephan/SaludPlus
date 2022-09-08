@@ -150,17 +150,17 @@ class MedicalConsultation(models.Model):
         comodel_name='allergy.disability.pathological.background',
         inverse_name='medical_consultation_id',
         string='Patologia',
-        required=False, domain="[('type_diseases', '=', 'diseases')]")
+        required=False, )
     disability_ids = fields.One2many(
-        comodel_name='allergy.disability.pathological.background',
+        comodel_name='disability.background',
         inverse_name='medical_consultation_id',
         string='Discapacidad',
-        required=False, domain="[('type_diseases', '=', 'disability')]")
+        required=False, )
     allergy_ids = fields.One2many(
-        comodel_name='allergy.disability.pathological.background',
+        comodel_name='allergy.background',
         inverse_name='medical_consultation_id',
         string='Alergia',
-        required=False, domain="[('type_diseases', '=', 'allergy')]")
+        required=False, )
 
     def add_exam(self):
         wizard = self.env['add.exam.wizard'].create({
