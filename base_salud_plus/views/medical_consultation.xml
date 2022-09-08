@@ -200,7 +200,7 @@
         <field name="name">prescription_view_tree</field>
         <field name="model">medical.prescription</field>
         <field name="arch" type="xml">
-            <tree string="Recetas" create="False">
+            <tree string="Recetas" create="false">
                 <field name="medicine_id"/>
                 <field name="duration"/>
                 <field name="uom_id"/>
@@ -223,7 +223,7 @@
         <field name="name">labs_indications_view_tree</field>
         <field name="model">labs.indications</field>
         <field name="arch" type="xml">
-            <tree string="Laboratorio" create="False">
+            <tree string="Laboratorio" create="false">
                 <field name="labs"/>
                 <field name="patient_id" invisible="1"/>
                 <field name="responsable_id"/>
@@ -242,7 +242,7 @@
         <field name="name">result_labs_view_tree</field>
         <field name="model">result.labs</field>
         <field name="arch" type="xml">
-            <tree string="Resultados de Laboratorio"  create="False">
+            <tree string="Resultados de Laboratorio"  create="false">
                 <field name="name"/>
                 <field name="date"/>
                 <field name="filename" invisible="1"/>
