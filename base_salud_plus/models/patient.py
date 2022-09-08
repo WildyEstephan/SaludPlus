@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from datetime import datetime
 
 class ResPartner(models.Model):
@@ -140,22 +140,96 @@ class ResPartner(models.Model):
         for rec in self:
             rec.indication_count = len(rec.indication_ids)
 
+    def add_exam(self):
+
+        wizard = self.env['add.exam.wizard'].create({
+
+            'patient_id': self.id,
+        })
+
+        return {
+            'name': _('Agregar'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'add.exam.wizard',
+            'view_mode': 'form',
+            'res_id': wizard.id,
+            'target': 'new'
+        }
+
+class AddExamWizard(models.TransientModel):
+    _name = 'add.exam.wizard'
+    _description = 'Add Exam Wizard'
+
+    patient_id = fields.Many2one(
+        comodel_name='res.partner',
+        string='Paciente',
+        required=False)
+    medical_consultation_id = fields.Many2one(
+        comodel_name='medical.consultation',
+        string='Consulta',
+        required=False)
+
+    height = fields.Float(
+        string='Altura',
+        required=False)
+    weight = fields.Float(
+        string='Peso',
+        required=False)
+    waist = fields.Float(
+        string='Cintura',
+        required=False)
+    systolic_pressure = fields.Float(
+        string='Presion S. Sistolica',
+        required=False)
+    diastolic_pressure = fields.Float(
+        string='Presion S. Diastolica',
+        required=False)
+
+    def add_this(self):
+
+        if not self.medical_consultation_id:
+            self.env['patient.physical.pressure.exam'].create({
+                'height': self.height,
+                'weight': self.weight,
+                'waist': self.waist,
+                'systolic_pressure': self.systolic_pressure,
+                'diastolic_pressure': self.diastolic_pressure,
+                'patient_id': self.patient_id.id
+            })
+        else:
+            self.env['patient.physical.pressure.exam'].create({
+                'height': self.height,
+                'weight': self.weight,
+                'waist': self.waist,
+                'systolic_pressure': self.systolic_pressure,
+                'diastolic_pressure': self.diastolic_pressure,
+                'patient_id': self.patient_id.id,
+                'medical_consultation_id': self.medical_consultation_id.id
+            })
+
 
 class PatientPhysicalPressureExam(models.Model):
     _name = 'patient.physical.pressure.exam'
     _description = 'Patient Physical & Pressure Exam'
-    _order = 'date asc'
+    _order = 'date desc'
 
     date = fields.Date(
         string='Fecha',
         required=True, default=datetime.today())
-    exam_id = fields.Many2one(
-        comodel_name='',
-        string='Examen',
-        required=True)
-    uom_id = fields.Many2one(
-        comodel_name='uom.uom',
-        string='Unidad de Medida',
+    height = fields.Float(
+        string='Altura | pies',
+        required=False)
+    weight = fields.Float(
+        string='Peso | libras',
+        required=False)
+    waist = fields.Float(
+        string='Cintura | pulgadas',
+        required=False)
+    systolic_pressure = fields.Float(
+        string='Presion S. Sistolica | mmHg',
+        required=False)
+    diastolic_pressure = fields.Float(
+        string='Presion S. Diastolica | mmHg',
         required=False)
     responsable_id = fields.Many2one(
         comodel_name='res.users',
@@ -194,11 +268,13 @@ class PathologicalBackground(models.Model):
     date = fields.Date(
         string='Fecha',
         required=True, default=datetime.today())
-    action = fields.Selection(
-        string='Accion',
-        selection=[('healed', 'Sano'),
+    state = fields.Selection(
+        string='Estado',
+        selection=[
+            ('detected', 'Detectato'),
+            ('healthy', 'Sano'),
                    ('in_treatment', 'En tratamiento'),
-                   ('sick', 'No atendido'),
+                   ('not_treated', 'No atendido'),
                    ],
         required=True, )
     responsable_id = fields.Many2one(

@@ -59,11 +59,16 @@
 
             <xpath expr="//page[@name='contact_addresses']" position="before">
                 <page name="exams" string="Examen Fisico y Presion Sanguinea">
-                    <field name="exam_ids">
-                        <tree editable="bottom">
+                    <button name="add_exam"
+                                     type="object" string="Agregar"  class="oe_highlight"/>
+                    <field name="exam_ids" readonly="1">
+                        <tree>
                             <field name="date"/>
-                            <field name="exam_id"/>
-                            <field name="uom_id"/>
+                            <field name="height" style="color: blue"/>
+                            <field name="weight" style="color: blue"/>
+                            <field name="waist" style="color: blue"/>
+                            <field name="systolic_pressure"  style="color: blue"/>
+                            <field name="diastolic_pressure"  style="color: blue"/>
                             <field name="responsable_id"/>
                         </tree>
                     </field>
@@ -72,10 +77,11 @@
                     <field name="pathological_background_ids" context="{'default_type_diseases': 'diseases'}">
                         <tree editable="bottom">
                             <field name="date"/>
-                            <field name="diseases_id"/>
-                            <field name="type_diseases"/>
-                            <field name="origin"/>
-                            <field name="action"/>
+                            <field name="diseases_id"
+                                   domain="[('type_diseases', '=', 'diseases')]"/>
+                            <field name="type_diseases" invisible="1"/>
+                            <field name="origin" invisible="1"/>
+                            <field name="state"/>
                             <field name="responsable_id"/>
                         </tree>
                     </field>
@@ -84,10 +90,11 @@
                     <field name="disability_ids" context="{'default_type_diseases': 'disability'}">
                         <tree editable="bottom">
                             <field name="date"/>
-                            <field name="diseases_id"/>
+                            <field name="diseases_id"
+                                   domain="[('type_diseases', '=', 'disability')]"/>
                             <field name="type_diseases"/>
                             <field name="origin"/>
-                            <field name="action"/>
+                            <field name="state"/>
                             <field name="responsable_id"/>
                         </tree>
                     </field>
@@ -96,10 +103,11 @@
                     <field name="allergy_ids" context="{'default_type_diseases': 'allergy'}">
                         <tree editable="bottom">
                             <field name="date"/>
-                            <field name="diseases_id"/>
+                            <field name="diseases_id"
+                                   domain="[('type_diseases', '=', 'allergy')]"/>
                             <field name="type_diseases"/>
                             <field name="origin"/>
-                            <field name="action"/>
+                            <field name="state"/>
                             <field name="responsable_id"/>
                         </tree>
                     </field>

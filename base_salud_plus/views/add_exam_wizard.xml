@@ -1,0 +1,34 @@
+<odoo>
+    <record id="add_exam_wizard_view_form" model="ir.ui.view">
+        <field name="name">add_exam_wizard_view_form</field>
+        <field name="model">add.exam.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Agregar">
+                <sheet>
+                    <field name="patient_id" invisible="1"/>
+                    <field name="medical_consultation_id" invisible="1"/>
+                    <table>
+                        <tr>
+                            <td>Altura</td>
+                            <td>Peso</td>
+                            <td>Cintura</td>
+                            <td>Presion S. Sistolica</td>
+                            <td>Presion S. Diastolica</td>
+                        </tr>
+                        <tr>
+                            <td><field name="height" required="1"/> pies</td>
+                            <td><field name="weight" required="1"/> libras</td>
+                            <td><field name="waist"  required="1"/> pulgadas</td>
+                            <td><field name="systolic_pressure"  required="1"/> mmHg</td>
+                            <td><field name="diastolic_pressure"  required="1"/> mmHg</td>
+                        </tr>
+                    </table>
+                </sheet>
+                <footer>
+                    <button name="add_this" type="object" string="Agregar" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

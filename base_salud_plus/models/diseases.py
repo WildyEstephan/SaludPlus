@@ -13,3 +13,10 @@ class Diseases(models.Model):
     description = fields.Text(
         string="Descripcion",
         required=False)
+    type_diseases = fields.Selection(
+        string='Type Diseases',
+        selection=[('diseases', 'Enfermedad'),
+                   ('disability', 'Discapacidad'),
+                   ('allergy', 'Alergia'),
+                   ],
+        required=False, default='diseases')

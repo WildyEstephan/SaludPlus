@@ -130,9 +130,9 @@ class MedicalConsultation(models.Model):
         required=False)
 
     # Factura
-    date_invoice = fields.Date(
-        string='Fecha Factura',
-        required=False)
+    date_income = fields.Date(
+        string='Fecha Ingreso',
+        required=False, default=datetime.today())
     amount = fields.Monetary(
         string='Monto',
         required=False)
@@ -161,6 +161,22 @@ class MedicalConsultation(models.Model):
         inverse_name='medical_consultation_id',
         string='Alergia',
         required=False, domain="[('type_diseases', '=', 'allergy')]")
+
+    def add_exam(self):
+        wizard = self.env['add.exam.wizard'].create({
+
+            'patient_id': self.patient_id.id,
+            'medical_consultation_id': self.id
+        })
+
+        return {
+            'name': _('Agregar'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'add.exam.wizard',
+            'view_mode': 'form',
+            'res_id': wizard.id,
+            'target': 'new'
+        }
 
     @api.model
     def create(self, values):
@@ -199,6 +215,10 @@ class MedicalPrescription(models.Model):
         comodel_name='medical.consultation',
         string='Consulta',
         required=False)
+    responsable_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Recetado por',
+        required=False, default=lambda self: self.env.user, )
 
 class LabsIndications(models.Model):
     _name = 'labs.indications'
@@ -216,6 +236,10 @@ class LabsIndications(models.Model):
         comodel_name='medical.consultation',
         string='Consulta',
         required=False)
+    responsable_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Indicado por',
+        required=False, default=lambda self: self.env.user, )
 
 class ResultLabs(models.Model):
     _name = 'result.labs'
@@ -239,6 +263,10 @@ class ResultLabs(models.Model):
         comodel_name='medical.consultation',
         string='Consulta',
         required=False)
+    responsable_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Registado por',
+        required=False, default=lambda self: self.env.user, )
 
 class ResUsers(models.Model):
     _inherit = 'res.users'

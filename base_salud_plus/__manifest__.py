@@ -36,6 +36,8 @@
         'views/patient.xml',
         'views/symptoms_view.xml',
         'views/specialty.xml',
+        'views/specialty.xml',
+        'views/add_exam_wizard.xml',
         'views/menus.xml',
     ],
     # only loaded in demonstration mode

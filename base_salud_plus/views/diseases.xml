@@ -5,6 +5,7 @@
         <field name="arch" type="xml">
             <tree string="Enfermedades">
                 <field name="name"/>
+                <field name="type_diseases" invisible="1"/>
             </tree>
         </field>
     </record>
@@ -15,6 +16,7 @@
         <field name="arch" type="xml">
             <form string="Enfermedad">
                 <sheet>
+                    <field name="type_diseases" invisible="1"/>
                     <field name="name"/>
                     <field name="description"/>
                     <field name="symptom_ids"/>
@@ -28,5 +30,25 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">diseases.diseases</field>
         <field name="view_mode">tree,form</field>
+        <field name="domain">[('type_diseases', '=', 'diseases')]</field>
+        <field name="context">{'type_diseases': 'diseases'}</field>
+    </record>
+
+    <record id="diseases_disability_action" model="ir.actions.act_window">
+        <field name="name">Discapacidad</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">diseases.diseases</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type_diseases', '=', 'disability')]</field>
+        <field name="context">{'type_diseases': 'disability'}</field>
+    </record>
+
+    <record id="diseases_allergy_action" model="ir.actions.act_window">
+        <field name="name">Alergia</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">diseases.diseases</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type_diseases', '=', 'allergy')]</field>
+        <field name="context">{'type_diseases': 'allergy'}</field>
     </record>
 </odoo>
