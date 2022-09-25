@@ -4,16 +4,25 @@ from datetime import datetime
 class MedicalConsultation(models.Model):
     _name = 'medical.consultation'
     _description = 'Medical Consultation'
+    _order = 'date_consultation desc '
 
     name = fields.Char(
         string='Numero',
         required=False)
+    state = fields.Selection(
+        string='State',
+        selection=[('new', 'Nuevo'),
+                   ('approve', 'Aprobado'),
+                   ('attending', 'Atendiendo'),
+                   ('done', 'Hecho'),
+                   ],
+        required=False, default='new')
 
     # Patient
     patient_id = fields.Many2one(
         comodel_name='res.partner',
         string='Paciente',
-        required=False)
+        required=True, domain=[('is_patient', '=', True)])
     vat = fields.Char(
         string='Identificacion No.',
         required=False, related='patient_id.vat')
@@ -69,7 +78,7 @@ class MedicalConsultation(models.Model):
     doctor_id = fields.Many2one(
         comodel_name='res.users',
         string='Medico',
-        required=False, default=lambda self: self.env.user,)
+        required=True, default=lambda self: self.env.user,)
     specialty_id = fields.Many2one(
         comodel_name='specialty.specialty',
         string='Especialidad',
@@ -78,12 +87,12 @@ class MedicalConsultation(models.Model):
         string='Modo de Consulta',
         selection=[('online', 'Online'),
                    ('offline', 'Presencial'), ],
-        required=False, default='offline')
+        required=True, default='offline')
     type_consultation = fields.Selection(
         string='Tipo de Consulta',
         selection=[('emergency', 'Emergencia'),
                    ('normal', 'Normal'), ],
-        required=False, default='normal')
+        required=True, default='normal')
     subject = fields.Char(
         string='Asunto',
         required=False)
@@ -123,6 +132,10 @@ class MedicalConsultation(models.Model):
     description_seguimiento = fields.Text(
         string="Descripcion",
         required=False)
+    tracking_patient_id = fields.Many2one(
+        comodel_name='tracking.patient',
+        string='Seguimiento',
+        required=False)
 
     # Seguro
     aprobacion_no = fields.Char(
@@ -161,6 +174,37 @@ class MedicalConsultation(models.Model):
         inverse_name='medical_consultation_id',
         string='Alergia',
         required=False, )
+
+    def approve(self):
+
+        if self.aprobacion_no:
+            self.env['medical.insurances.approvations'].create({
+                'name': self.aprobacion_no,
+                'patient_id': self.patient_id.id,
+                'medical_insurance_id': self.medical_insurance_id.id
+            })
+
+        self.state = 'approve'
+
+    def attending(self):
+        self.state = 'attending'
+
+    def done(self):
+
+        if self.date_next:
+            self.env['tracking.patient'].create({
+                'name': self.asunto_seguimiento,
+                'patient_id': self.patient_id.id,
+                'user_id': self.responsable_id_seguimiento.id,
+                'description': self.description_seguimiento,
+                'date_start': self.date_next,
+                'doctor_id': self.doctor_id.id,
+            })
+
+        if self.tracking_patient_id:
+            self.tracking_patient_id.done()
+
+        self.state = 'done'
 
     def add_exam(self):
         wizard = self.env['add.exam.wizard'].create({

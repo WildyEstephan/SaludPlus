@@ -99,10 +99,35 @@ class ResPartner(models.Model):
     result_lab_count = fields.Integer(
         string='Indication_count',
         required=False, compute='_compute_result_lab_count')
+    tracking_patient_ids = fields.One2many(
+        comodel_name='tracking.patient',
+        inverse_name='patient_id',
+        string='Seguimiento/Citas',
+        required=False)
+    tracking_count = fields.Integer(
+        string='Tracking Count',
+        required=False)
+
+    @api.depends('tracking_patient_ids')
+    def _compute_tracking_count(self):
+        for rec in self:
+            rec.tracking_count = len(rec.tracking_patient_ids)
+
+    def action_view_tracking_patient(self):
+        '''
+        This function returns an action that displays the opportunities from partner.
+        '''
+        action = self.env['ir.actions.act_window']._for_xml_id('base_salud_plus.tracking_patient_action')
+        action['context'] = {'default_patient_id': self.id,
+                             'default_name': self.name,
+                             'default_user_id': self.env.user.id}
+        action['domain'] = [('patient_id', '=', self.id)]
+        return action
 
     def action_view_consultation(self):
         action = self.env['ir.actions.act_window']._for_xml_id('base_salud_plus.medical_consultation_action')
         action['domain'] = [('patient_id.id', '=', self.id)]
+        action['context'] = {'default_patient_id': self.id}
         return action
 
     def action_view_prescription(self):

@@ -20,13 +20,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['account', 'stock', 'crm'],
+    'depends': ['account', 'calendar'],
 
     # always loaded
     'data': [
         'data/groups.xml',
         'security/ir.model.access.csv',
         'views/medical_insurance.xml',
+        'views/tracking_views.xml',
         'views/partner_view.xml',
         'views/diseases.xml',
         'views/physical_pressure_exam.xml',

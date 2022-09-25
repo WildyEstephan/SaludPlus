@@ -7,6 +7,10 @@
         <field name="arch" type="xml">
 
             <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button o_res_partner_tip_opp" type="object" name="action_view_tracking_patient"
+                        icon="fa-star">
+                    <field string="Seguimientos/Citas" name="tracking_count" widget="statinfo"/>
+                </button>
                 <button class="oe_stat_button" type="object" name="action_view_consultation"
                         icon="fa-file">
                         <field string="Consultas" name="consultation_count" widget="statinfo"/>
@@ -17,13 +21,12 @@
                     </button>
                 <button class="oe_stat_button" type="object" name="action_view_indication"
                         icon="fa-list">
-                        <field string="indicaciones" name="indication_count" widget="statinfo"/>
-                    </button>
-                    <button class="oe_stat_button" type="object" name="action_view_result_lab"
-                        icon="fa-list">
-                        <field string="Resultados" name="result_lab_count" widget="statinfo"/>
-                    </button>
-
+                    <field string="Indicaciones" name="indication_count" widget="statinfo"/>
+                </button>
+                <button class="oe_stat_button" type="object" name="action_view_result_lab"
+                    icon="fa-list">
+                    <field string="Resultados" name="result_lab_count" widget="statinfo"/>
+                </button>
             </xpath>
 
             <xpath expr="//field[@name='vat']" position="before">

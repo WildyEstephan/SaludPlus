@@ -38,4 +38,8 @@
         action="action_patients"
         parent="menu_patients"
         sequence="2"/>
+
+    <!-- This Menu Item must have a parent and an action -->
+    <menuitem id="tracking_patient_action_categ" name="Seguimientos/Citas"
+              parent="menu_patients" action="tracking_patient_action" sequence="3"/>
 </odoo>
