@@ -1,0 +1,224 @@
+<odoo>
+    <record id="action_report_medical_prescription" model="ir.actions.report">
+        <field name="name">Recetas</field>
+        <field name="model">medical.consultation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">base_salud_plus.report_medical_prescription</field>
+        <field name="report_file">base_salud_plus.report_medical_prescription</field>
+        <field name="print_report_name">('Recetas - %s' % (object.name))</field>
+        <field name="binding_model_id" ref="model_medical_consultation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_medical_prescription">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                         <h2 class="mt16">
+                             <span>Consulta # </span>
+                            <span t-field="doc.name"/>
+                        </h2>
+
+                        <div class="row mt32 mb32" id="informations">
+                            <div t-if="doc.patient_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Paciente:</strong>
+                                <p class="m-0" t-field="doc.patient_id"/>
+                            </div>
+                            <div t-if="doc.medical_insurance_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Seguro:</strong>
+                                <p class="m-0" t-field="doc.medical_insurance_id"/>
+                            </div>
+                            <div t-if="doc.medical_category_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Plan Seguro:</strong>
+                                 <p t-field="doc.medical_category_id"/>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row mt32 mb32" id="doctor">
+                            <div t-if="doc.doctor_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Doctor:</strong>
+                                <p class="m-0" t-field="doc.doctor_id"/>
+                            </div>
+                            <div t-if="doc.specialty_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Especialidad:</strong>
+                                <p class="m-0" t-field="doc.specialty_id"/>
+                            </div>
+                            <div t-if="doc.date_consultation" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Fecha:</strong>
+                                <p class="m-0" t-field="doc.date_consultation"/>
+                            </div>
+                        </div>
+
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th>Medicamento</th>
+                                    <th class="text-right">Duracion</th>
+                                    <th class="text-right">Indicacion</th>
+                                    <th class="text-right">Pauta</th>
+                                    <th class="text-right">Indicacion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.prescription_ids" t-as="prescription">
+                                    <td><span t-esc="prescription.medicine_id.name"/></td>
+                                    <td class="text-right"><span t-esc="prescription.duration"/></td>
+                                    <td class="text-right"><span t-esc="prescription.uom_id.name"/></td>
+                                    <td class="text-right"><span t-esc="prescription.pauta"/></td>
+                                    <td class="text-right"><span t-esc="prescription.indications"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_labs_indications" model="ir.actions.report">
+        <field name="name">Laboratorio</field>
+        <field name="model">medical.consultation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">base_salud_plus.report_labs_indications</field>
+        <field name="report_file">base_salud_plus.report_labs_indications</field>
+        <field name="print_report_name">('Laboratorio - %s' % (object.name))</field>
+        <field name="binding_model_id" ref="model_medical_consultation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_labs_indications">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                         <h2 class="mt16">
+                             <span>Consulta # </span>
+                            <span t-field="doc.name"/>
+                        </h2>
+
+                        <div class="row mt32 mb32" id="informations">
+                            <div t-if="doc.patient_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Paciente:</strong>
+                                <p class="m-0" t-field="doc.patient_id"/>
+                            </div>
+                            <div t-if="doc.medical_insurance_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Seguro:</strong>
+                                <p class="m-0" t-field="doc.medical_insurance_id"/>
+                            </div>
+                            <div t-if="doc.medical_category_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Plan Seguro:</strong>
+                                 <p t-field="doc.medical_category_id"/>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row mt32 mb32" id="doctor">
+                            <div t-if="doc.doctor_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Doctor:</strong>
+                                <p class="m-0" t-field="doc.doctor_id"/>
+                            </div>
+                            <div t-if="doc.specialty_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Especialidad:</strong>
+                                <p class="m-0" t-field="doc.specialty_id"/>
+                            </div>
+                            <div t-if="doc.date_consultation" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Fecha:</strong>
+                                <p class="m-0" t-field="doc.date_consultation"/>
+                            </div>
+                        </div>
+
+                        <br/><br/>
+
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th><strong>Indicacion</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.labs_ids" t-as="lab">
+                                    <td><span t-esc="lab.labs.name"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_income" model="ir.actions.report">
+        <field name="name">Recibo</field>
+        <field name="model">medical.consultation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">base_salud_plus.report_income</field>
+        <field name="report_file">base_salud_plus.report_income</field>
+        <field name="print_report_name">('Recibo - %s' % (object.name))</field>
+        <field name="binding_model_id" ref="model_medical_consultation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_income">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                         <h2 class="mt16">
+                             <span>Consulta # </span>
+                            <span t-field="doc.name"/>
+                        </h2>
+
+                        <div class="row mt32 mb32" id="informations">
+                            <div t-if="doc.patient_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Paciente:</strong>
+                                <p class="m-0" t-field="doc.patient_id"/>
+                            </div>
+                            <div t-if="doc.medical_insurance_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Seguro:</strong>
+                                <p class="m-0" t-field="doc.medical_insurance_id"/>
+                            </div>
+                            <div t-if="doc.medical_category_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Plan Seguro:</strong>
+                                 <p t-field="doc.medical_category_id"/>
+                            </div>
+
+                        </div>
+                        <br/>
+                        <div class="row mt32 mb32" id="doctor">
+                            <div t-if="doc.doctor_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Doctor:</strong>
+                                <p class="m-0" t-field="doc.doctor_id"/>
+                            </div>
+                            <div t-if="doc.specialty_id" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Especialidad:</strong>
+                                <p class="m-0" t-field="doc.specialty_id"/>
+                            </div>
+                            <div t-if="doc.date_consultation" class="col-auto col-3 mw-100 mb-2">
+                                <strong>Fecha:</strong>
+                                <p class="m-0" t-field="doc.date_consultation"/>
+                            </div>
+                        </div>
+
+                        <br/><br/>
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr>
+                                    <th><strong>Monto Consulta</strong></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="oe_currency_value" t-esc="doc.amount"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -40,6 +40,7 @@
         'views/specialty.xml',
         'views/add_exam_wizard.xml',
         'views/menus.xml',
+        'reports/reports.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
